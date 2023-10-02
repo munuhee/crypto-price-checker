@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crypto-price-checker
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: crypto-price-checker
+  template:
+    metadata:
+      labels:
+        app: crypto-price-checker
+    spec:
+      containers:
+        - name: crypto-price-checker
+          image: crypto-price-checker:minikube
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
