@@ -8,7 +8,6 @@ The Crypto Price Checker is a Flask application that provides cryptocurrency pri
 
 Before you can run the application, ensure you have the following prerequisites and dependencies:
 
-- Python 3.10
 - Docker
 - Kubernetes (optional, for deployment)
 
