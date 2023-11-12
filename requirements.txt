@@ -127,7 +127,7 @@ paramiko==2.9.3
 parso==0.8.3
 pexpect==4.8.0
 pickleshare==0.7.5
-Pillow==9.0.1
+Pillow==10.0.1
 platformdirs==3.10.0
 ply==3.11
 prometheus-client==0.17.1
