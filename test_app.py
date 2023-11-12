@@ -29,11 +29,14 @@ class CryptoAPITestCase(TestCase):
         """
         Test getting the price of a valid cryptocurrency.
         """
-        crypto_name = 'Bitcoin'
+        crypto_name = "Bitcoin"
         response = self.client.post('/crypto_price', json={'name': crypto_name})
+        print("Response Status Code:", response.status_code)
+        print("Response Data:", response.data.decode('utf-8'))
         data = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['name'], crypto_name)
+
 
     def test_get_crypto_price_invalid(self):
         """
