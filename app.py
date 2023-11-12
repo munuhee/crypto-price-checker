@@ -5,9 +5,11 @@ This Flask app provides cryptocurrency price information.
 """
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import requests
 
 app = Flask(__name__)
+CORS(app)
 
 # Constants
 COINSTATS_API_URL = 'https://api.coinstats.app/public/v1/coins/'
