@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Constants
-COINSTATS_API_URL = 'https://api.coinstats.app/public/v1/coins/'
+COINSTATS_API_URL = 'https://openapiv1.coinstats.app/coins'
 
 @app.route('/health')
 def health_check():
