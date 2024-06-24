@@ -11,13 +11,12 @@ import requests
 app = Flask(__name__)
 CORS(app)
 
-# Constants
-COINSTATS_API_URL = 'https://openapiv1.coinstats.app/coins'
+BASE_URL = 'https://api.coincap.io/v2/assets'
 
 @app.route('/health')
 def health_check():
     """
-    This route return a 200 OK response if your application is healthy
+    This route returns a 200 OK response if your application is healthy.
     """
     return jsonify({'message': 'Application is healthy'}), 200
 
@@ -34,24 +33,24 @@ def get_crypto_price():
     Get the price of a cryptocurrency by name.
     """
     crypto_name = request.json.get('name')
-    
+
     if not crypto_name:
         return jsonify({'error': 'Please provide a crypto name'}), 400
 
     try:
-        response = requests.get(COINSTATS_API_URL, timeout=10)
+        # Construct the URL to fetch the cryptocurrency data
+        url = f'{BASE_URL}/{crypto_name.lower()}'
+        response = requests.get(url, timeout=10)
 
         if response.status_code == 200:
             coin_data = response.json()
-            coins = coin_data.get('coins', [])
-
-            matching_coin = next((coin for coin in coins if crypto_name.lower() == coin.get('name', '').lower()), None)
-
-            if matching_coin:
-                price = matching_coin.get('price', 0)
+            if 'data' in coin_data:
+                price = coin_data['data'].get('priceUsd', 0)
                 return jsonify({'name': crypto_name, 'price': price})
-            return jsonify({'error': 'Crypto name not found'}), 404
-        return jsonify({'error': 'Failed to fetch cryptocurrency data'}), 400
+            else:
+                return jsonify({'error': 'Crypto name not found'}), 404
+        else:
+            return jsonify({'error': 'Failed to fetch cryptocurrency data'}), 400
 
     except requests.exceptions.RequestException as e:
         return jsonify({'error': f'Error fetching cryptocurrency data: {str(e)}'}), 400
