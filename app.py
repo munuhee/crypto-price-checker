@@ -25,7 +25,7 @@ def get_crypto():
     """
     Returns a welcome message for the Crypto API.
     """
-    return jsonify({'message': 'Welcome to the Crypto API!'})
+    return jsonify({'message': 'Welcome to the Crypto API!'}), 200
 
 @app.route('/crypto_price', methods=['POST', 'GET'])
 def get_crypto_price():
@@ -44,7 +44,7 @@ def get_crypto_price():
 
         if response.status_code == 200:
             coin_data = response.json()
-            if 'data' in coin_data:
+            if 'data' in coin_data and coin_data['data'] is not None:
                 price = coin_data['data'].get('priceUsd', 0)
                 return jsonify({'name': crypto_name, 'price': price})
             else:
